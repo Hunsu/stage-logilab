@@ -1,0 +1,93 @@
+\documentclass[a4paper,12pt,dvipsnames]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[nottoc,numbib]{tocbibind}
+\usepackage[french, english]{babel}
+\usepackage{csquotes}
+\usepackage{lmodern}
+\usepackage{lipsum}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage[frenchb]{translator}
+\usepackage[a4paper]{geometry}
+\usepackage{tikz} 
+\usepackage{standalone}
+\usepackage{parskip}
+\usepackage[backend=biber,sorting=none,alldates=short]{biblatex}
+\addbibresource{rapport.bib}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+  	citecolor=Violet,
+  	linkcolor=blue,
+  	urlcolor=black,
+    pdfborder={0 0 0},
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[style=long,toc,xindy,acronym, sort=use]{glossaries}
+\makeglossaries
+
+\newacronym{REST}{REST}{REpresentational State Transfer}
+\newacronym{yams}{YAMS}{Yet Another Magic Schema}
+\newacronym{rql}{RQL}{Relation Query Language}
+\newacronym{xml}{XML}{JavaScript Object Notation}
+\newacronym{rdf}{RDF}{Resource Description Framework}
+\newacronym{json}{JSON}{Relation Query Language}
+\newacronym{saas}{SAAS}{Software As A Service}
+\newacronym{sql}{SQL}{Structured Query Language}
+\newacronym{ldap}{LDAP}{Lightweight Directory Access Protocol}
+\newacronym{lgpl}{LGPL}{GNU Lesser General Public License}
+\newacronym{html}{HTML}{Hypertext Markup Language}
+\newacronym{http}{HTTP}{Hypertext Transfer Protocol}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newlength\marginwidth
+\setlength\marginwidth{\dimexpr\marginparwidth+\marginparsep}
+\newlength\totalwidth 
+\setlength\totalwidth{\dimexpr\textwidth+\marginwidth}
+
+\renewcommand{\thesection}{\arabic{section}}
+
+\newenvironment{abstractpage}
+  {\cleardoublepage\vspace*{\fill}\thispagestyle{empty}}
+  {\vfill\cleardoublepage}
+\renewenvironment{abstract}[1]
+  {\bigskip\selectlanguage{#1}%
+   \begin{center}\bfseries\abstractname\end{center}}
+  {\par\bigskip}
+
+
+
+
+\begin{document}
+\include{titlepage}
+\include{abstract}
+\include{thanks}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\include{introduction}
+
+\include{chapter1}
+\include{chapter2}
+\include{chapter3}
+
+\include{bilan}
+
+\include{conclusion}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\printglossaries
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\nocite{*}
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliographie}
+\printbibliography
+\end{document}
