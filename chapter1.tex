@@ -1,0 +1,122 @@
+\chapter{Contexte du stage}
+\section{Logilab}
+Logilab est une société de services d'une vingtaine de personnes créée en septembre 2000. Logilab a opté pour le modèle économique \textit{open source}. Logilab est spécialisée dans le développement de solutions informatiques principalement dans les domaines de gestion de connaissance et scientifique. Elle propose aussi du conseil et des formations couvrant de multiples sujets (Python, \glslink{xml}{XML}, conception orientée objet, C++, méthodes agiles, etc.).
+
+Logilab contribue au Logiciel Libre et met plusieurs des ses développements sous la licence libre \glslink{lgpl}{LGPL}. Elle privilégie les solutions libres qui répondent aux besoins de l'utilisateur et offrent des garanties de stabilité. Elle privilégie Debian, la distribution de Linux non commerciale, qui est installée sur son parc informatique. Elle utilise majoritairement le langage Python pour développement de ses outils. Logilab contribue à la communauté Python, co-organise la conférence annuelle EuroPython et a co-fondé Python Business Forum, une association européenne ayant pour objectif de promouvoir les utilisations de Python dans l'industrie.
+
+Logilab est l'une des entreprises françaises expertes en langage Python et en web sémantique. En 2013, elle avait remporté le prix Stanford de l'innovation pour le projet Databnf réalisé pour le compte de la Bibliothèque nationale de France. Le même projet a aussi remporté le Trophée de l'Excellence « Data Intelligence », toutes catégories confondues, dans le cadre du salon Documation - MIS 2013\cite{dta}. Le projet a permet d'exposer les catalogues de la Bibliothèque nationale de France en s’appuyant sur les technologies de web sémantique. Dans le domaine scientifique, Logilab propose Simulagora, une plateforme de simulation de calcul scientifique dans les nuages.
+
+Parmi les développement réalisé par Logilab et qui sont distribué sous licence libre on peut citer :
+\begin{description}
+\item[Pylint]\hfill\\ Un logiciel de vérification de code source et de la qualité du code pour le langage Python. Il utilise les recommandations officielles de style de la \glslink{pep}{PEP} 8.
+\item[CubicWeb]\hfill\\ un framework web pour la réalisation d’applications web. Il supporte les standards du web sémantique.
+\item[RQL]\hfill\\ \glslink{rql}{RQL} est Un langage de requête de haut niveau s’inspirant de langage SQL permettant d'interroger des sources de données.
+\item[Mercurial] \hfill\\ plusieurs outils autour de logiciel de gestion de version Mercurial. Logilab propose plusieurs extensions au logiciel et un application de revue de code pour les entrepôt Mercurial. 
+\end{description}
+
+
+
+\section{CubicWeb}
+CubicWeb est framework pour le développement d'applications du web sémantique écrit en langage Python. Son développement a commencé en 2001 et est utilisé pour l'intranet de Logilab. En octobre 2008, Logilab sort le framework sous la licence libre \glslink{lgpl}{LGPL}. En 2013, CubicWeb est lauréat du concours Dataconnexions 2013, organisé par Etalab\cite{etalab}.
+
+Le framework permet à l'utilisateur de se concentrer sur le type de données manipulées par l'application. Une fois le schéma de données est défini à l'aide de langage \glslink{yams}{YAMS}, CubicWeb fournit des vues permettant de manipuler ces données avec différant types de formats (\glslink{html}{HTML}, \glslink{rdf}{RDF}, \glslink{json}{JSON}, \glslink{xml}{XML}, etc.). CubicWeb supporte plusieurs sources de données comme les bases \glslink{sql}{SQL}, les annuaires \glslink{ldap}{LDAP}, les entrepôt de donnés Mercurial. Pour faciliter l'utilisation de CubicWeb dans le développement utilisant des méthodes agile, CubicWeb fournit un outil pour réaliser la migration de l'application vers des version plus récentes. Cet outil permet de changer le schéma de données à tout moment durant le développement de l'application.
+
+
+Afin d'accélérer le développement d'une application, CubicWeb permet l'utilisation de composants appelés \emph{cubes}. Un cube est composant CubicWeb fournissant une fonctionnalité. Plusieurs cubes peuvent être assemblés pour réaliser son application finale. Logilab avait développé un nombre important de cubes qui sont disponibles sous licence libre. Par exemple une application web d'un blog peut utiliser les cubes \textit{blog} qui fournit la fonctionnalité pour la rédaction de billets, le cube \textit{comment} qui permet de rajouter des commentaires sur les billets. Toutes les fonctionnalités de l'application sont ainsi fournies par ces deux cubes. Il reste qu'à personnaliser les vues par défaut de ces cubes.
+
+L'une des principales fonctionnalités de CubicWeb est son mécanisme de sélection des objets de l'application appelés \textit{appobjects} (vues, contrôleurs, services, etc.). Ces objets sont chargés au lancement de l'application et c'est le framework qui décide quel objet utiliser en fonction de contexte de la requête de l'utilisateur. Le framework se base sur le contexte pour attribuer des scores pour les \textit{appobjects} disponibles et pouvoir ainsi utiliser le meilleur adapté à la requête de l'utilisateur.  
+
+Depuis 2014, un projet appelé Pyramid-Cubicweb a été développé pour permettre de coupler CubicWeb avec le framework web Pyramid. L'utilisateur a accès aux fonctionnalités des deux frameworks. 
+ 
+\section{Architecture REST}
+\begin{figure}
+\centering
+  \includegraphics[width=.6\textwidth]{tikz/rest.pdf}
+  \caption{Un système respectant le style d'architecture REST}
+  \label{fig:rest}
+\end{figure}
+\glslink{REST}{REST} (\textit{REpresentational State Transfer}) est un style d'architecture qui définit des contraintes pour les systèmes hypermédia distribués. Il a été crée par Roy Fielding\footnote{L’un des principaux auteurs de la spécification \glslink{http}{HTTP} et membre fondateur de la fondation Apache} dans sa thèse de doctorat. C'est le style adopté par plusieurs géant du web\footnote{comme Google, Facebook, Microsoft, .etc.} pour implémenter leur services. 
+
+REST définit six contraintes qui, si elle sont respectées, permettent d'avoir un système performant, scalable et fiable. Les six contraintes sont :
+
+\begin{description}
+\item[Client-Serveur]\hfill\\
+Les responsabilités doivent être séparées entre le client et le serveur. Le serveur fournit une interface que le client peut utiliser. Cette contrainte permet aux deux d'évoluer indépendamment.
+
+\item[Sans état]\hfill\\
+C'est le client qui est responsable de stocker l'état de ses requêtes. La requête du client doit contenir toutes les informations nécessaires pour son exécution par le serveur. Cela permet d'avoir un système scalable. En effet en rajoutant un deuxième serveur, les requêtes des clients peuvent être partagés entre les deux serveurs d'une manière égale\footnote{Si l'état est stocké par le serveur, cet état doit être dupliqué sur chaque serveur.}.
+
+\item[Mise en cache]\hfill\\
+L'utilisation d'un cache pour ne pas renvoyer des données qui ont été déjà chargé par le client et que celles-ci n'ont pas changé. Cette contrainte permet d'améliorer les performances du système.
+
+\item[Une interface uniforme]\hfill\\
+Le serveur doit fournir au client une interface qui respecte les quatre règles suivantes :
+\begin{itemize}
+\item Chaque ressource doit avoir un identifiant
+\item L'utilisation des représentations pour manipuler les ressources
+\item Les requêtes et réponses sont auto-descriptifs
+\item Hypermédia comme moteur d'état de l'application 
+\end{itemize} 
+
+\item[Un système hiérarchisé par couche]\hfill\\
+Le système doit être hiérarchisé par couche et chaque couche a une responsabilité unique. Par exemple une couche peut avoir la responsabilité d'authentifier les clients et une autre peut offrir un cache. Cette contrainte permet l'évolution facile du système.
+
+\item[Code à la demande]\hfill\\
+Cette contrainte est optionnelle. Elle permet au serveur d'envoyer de code qui sera exécuter par le client. Cela permet d'améliorer les performances du système et permet au client d'évoluer au cours du temps.
+\end{description}
+
+En analysant ces contraintes, on trouve que le protocole \glslink{http}{HTTP} respecte bien le style d'architecture REST. Cela s'explique par fait que Roy Fielding avait participé à l'écriture de ces spécifications et que REST est adapté au World Wide Web.  
+ 
+\section{Méthode de travail}
+\subsection{Méthodes agiles}
+Pour réaliser les projets des client, Logilab leur laisse le choix entre une méthode de gestion de projet traditionnelle et une méthode agile mais Logilab privilégie cette dernière. La méthode agile utilisée par Logilab est très influencée par la méthode \gls{xp}{XP}, Scrum et Kanban. En utilisant une méthode agile, un projet est développé d'une manière itératif et incrémental. Logilab et le client définissent les fonctionnalités à développer durant une itération. Ces fonctionnalités seront transformées en tâches (\textit{tickets}) et sont réalisées par ordre de priorité. La fin d'une itération donne lieu à un ensemble de livrables qui seront validés par le client. Ces nouvelles fonctionnalités seront ensuite intégrer aux livrables de l'itération précédente.
+
+La méthode agile a été appliquée pour le développement du projet de stage. On avait utilisé principalement la méthode Kanban avec l'application de certaines pratiques de la méthode \glslink{xp}{XP} et de Scrum. Nous utilisons un tableau Kanban avec les colonnes suivantes : 
+\begin{description}
+	\item[backlog] l'ensemble des tâches à réaliser
+	\item[ready] les tâches qui peuvent être réalisées et qui ne dépendent pas d'autres tâches non finies
+	\item[doing] les tâches en cours de réalisation
+	\item[review] les tâches en attente de revue.
+\end{description}
+\begin{figure}
+\centering
+  \includegraphics[width=\textwidth]{tikz/kanban.pdf}
+  \caption{Cycle de vie d'une tâche avec la méthode Kanban}
+  \label{fig:rest}
+\end{figure}
+On commence par établir un ensemble de tâches sous forme de post-it qui sont ajoutées à la colonne \textit{backlog} du tableau Kanban. Les tâches qui peuvent être réalisées passent à la colonne \textit{ready}. La tâche la plus prioritaire passe à la colonne \textit{doing} du tableau. Une fois la tâche est finie elle passe à la colonne \textit{review} d'une autre personne. La personne ayant des tâches dans sa colonne \textit{review} s'occupe de faire la revue pour ces tâches et c'est lui qui décide c'est la tâche est finie. Si la tâche est considéré comme finie, le code développé sera intégré dans le projet et dans le cas contraire la tâche passe à la colonne \textit{ready} ou \textit{doing} de la personne travaillant sur la tâche. 
+
+Des pratiques de la méthode XP sont appliquées tout au long du développement. Un document regroupant les bonnes pratiques et les conventions de codage a été rédigé par Logilab et ces règles doivent être appliquées au code écrit. Le développement est piloté par les tests (\glslink{tdd}{TDD}), les tests sont développés avant les fonctionnalités. Cette pratique permet d'écrire un minimum de code qui fait passer les tests ce qui minimise le temps de développement. Une fois les tests passent, le code passe à la phase de \textit{refactoring}, durant cette phase plusieurs opérations peuvent être faites dans le but d'améliorer la qualité de code (renommage, extraction des méthodes, utilisation des design pattern...etc.). \`A la fin de la phase de \textit{refactoring}, le code est envoyé à l’entrepôt distant. Une personne est choisi pour faire une première revue de code. La personne faisant la première revue peut demander la réalisation de tâches supplémentaires avant de le passer à phase d'intégration. 
+
+\begin{figure}
+\centering
+  \includegraphics[width=.7\textwidth]{tikz/review.pdf}
+  \caption{Le système de revue à Logilab}
+  \label{fig:rest}
+\end{figure}
+
+Tous les jours nous effectuions une réunion devant le tableau Kanban où chacun explique aux autres les tâches qu'il avait réalisé, les problèmes qu'il rencontre et les tâches sur lesquelles il va travaillé ensuite. Cette réunion permet de savoir l'avancement de tous les projets et permet le partage des idées sur les points bloquants. Chaque semaine le personnel de Logilab répondent à un mail de RSH pour expliquer ce s'est bien ou mal passé durant la semaine précédente, le travail réalisé et le travail à faire durant la semaine. Une réunion rétrospective est organisée tous les mois durant laquelle nous discutant de ce qui a été fait durant le mois précédent et des problèmes rencontrés et nous proposons des solutions pour ceux-ci. 
+
+\subsection{VSprint}
+Le personnel de l'agence de Toulouse consacre la journée du vendredi de tous les quinze jours pour un VSprint. Durant le VSprint, tous le personnel développent ou améliorent les outils internes de l'entreprise. Chaque binôme se voit affecter un sujet par le directeur de l'agence. Le sujet est ensuite développé en \textit{pair programming}.
+
+L'objectif du VSprint est de permettre le partage des connaissances et de bonnes pratiques de développement, de faire connaître les projets des autres développeurs et d'améliorer de façon continue les outils de l'entreprise. 
+
+Une demie heure est aussi consacrée aux présentations (généralement deux). des sujets sont sélectionnés et quelqu'un se porte volontaire pour les présenter aux autres. Cette pratique est pertinente car c'est un moyen d'autoformation.
+
+
+\section{Outils}
+Un ensemble d'outils ont été utilisés pour la réalisation du projet de stage. 
+
+\subsection{Python et JavaScript : langages de programmation}
+Logilab est spécialisé dans le développement avec le langage de programmation Python. La grande partie des développement réalisée pendant le stage est alors écrite en Python. Python est un langage orienté objet, multi-paradigme qui est doté d'un typage dynamique. L'un des avantages de Python est la possibilité de modifier un programme sans avoir à changer directement le code de celui-ci (\textit{monkeypatching}).
+
+JavaScript est aussi utilisé pour l'écriture de code qui exécutant au côté client. 
+
+\subsection{Mercurial}
+Mercurial est un logiciel de gestion de version décentralisé. Mercurial crée une branche pour chaque développeur d'un entrepôt. Il permet aussi d'associer un état (brouillon, publique, secret) à chaque nouvelle révision. Une nouvelle version commence dans l'état brouillon et passe à l'état publique lorsque elle est prête à être intégrer. 
+
+Plusieurs extensions sont disponibles et qui rajoutent des fonctionnalités avancées au logiciel. Les extensions les plus utilisée durant le stage sont \textit{histedit} et \textit{evolve}. Ces deux extensions permettent de modifier l'historique dans le but d'avoir un historique propre. Elle permettent de changer les message d'une révision, fusionner des révisions et modifier une révision. Ces deux extensions garantissent qu'aucune donnée n'est perdu en modifiant l'historique. 
+
+\subsection{Extranet}
+Plusieurs outils sont disponibles sur l'extranet de l'entreprise. L'outil le plus utilisé est l'application de revue de code. \`A l'arrivé d'une nouvelle révision à l'entrepôt, l'application choisit une personne pour la revue. L'application permet aussi les visionnage des modifications apporté par cette révision. La révision est ensuite validée ou des tâches lui seront associées avant sa validation. L'application permet aussi de voir à quelle tâche (\textit{ticket}) est attachée la nouvelle révision.   
