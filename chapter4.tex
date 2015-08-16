@@ -1,0 +1,69 @@
+\chapter{Conception et développement}
+\section{État des lieux}
+\label{edl}
+Le premier objectif de mon projet de stage est de dresser l'état des lieux du respect des principes de l'architecture REST dans CubicWeb. Pour cela j'ai commencé par rédiger un document \glslink{cwep}{CWEP} (\textit{CubicWeb Enhancement Proposals}). J'ai commencé par réalisé une série de tests pour voir comment CubicWeb gère les requêtes web. J'ai d'abord crée une application CubicWeb utilisant le cube blog. J'ai lancé l'application et j'ai crée une entité qui sera utilisé pour les tests. Le tableau \ref{table:tests} illustre les résultats de ces tests. 
+
+Les tests ont montré que CubicWeb ne respecte pas certaines spécification du protocole HTTP. En effet CubicWeb retourne des réponses non valides pour certaines requêtes HTTP. CubicWeb retourne des réponses ayant un format qui n'est pas géré par client. Les verbes HTTP n'ont pas de sémantique dans CubicWeb, en effet tous les verbes sont traité de la même manière. Pour avoir une réponse dans un format différent de \texttt{text/html}, un paramètre indiquant le format doit être inclut dans la requête. 
+
+CubicWeb utilise la session pour stocker de données relatives à chaque requête HTTP. Lors de la modification d'une entité, les changement effectué sont stockés dans la session. Ceci permet de reprendre l'édition de l'entité même après avoir quitté la page d'édition. CubicWeb utilise un mécanisme appelé \textit{breadcrumbs} pour stocker les dix dernières URLs visitées par l'utilisateur.
+
+Les tests ont montré que CubicWeb ne respecte pas les principes de l'architecture REST. CubicWeb ne respecte pas le deuxième principes car l'état des requêtes est stocké sur le serveur. L'application nécessite beaucoup de mémoire pour pouvoir stocker l'état de chaque requête. Ces données seront dupliquées sur chaque serveur hébergeant l'application. 
+
+CubicWeb ne fournit pas une interface uniforme ce qui est contraire au quatrième principe de REST. Certaines URLs de CubicWeb ne respecte les principes d'une interface uniforme de REST. Il n'y a pas aussi une bonne utilisation des verbes HTTP. Le framework JavaScript de CubicWeb contient des méthodes faisant des requêtes utilisant un mauvais verbe HTTP (POST au lieu de GET). Cette mauvaise utilisation réduit l'efficacité de cache\footnote{Il n'est pas possible de mettre en cache les réponses pour des requêtes POST}.
+
+\begin{table}[!h]
+\begin{tabular}{|>{\raggedright\arraybackslash}m{.3\textwidth}|m{.3\textwidth}|m{.4\textwidth}|}
+\hline
+\multicolumn{1}{|>{\centering\arraybackslash}m{.3\textwidth}|}{\cellcolor{Gray}\textbf{Requête HTTP}} 
+    & \multicolumn{1}{>{\centering\arraybackslash}m{.3\textwidth}|}{\cellcolor{Gray}\textbf{Réponse}} 
+    & \multicolumn{1}{>{\centering\arraybackslash}m{.4\textwidth}|}{\cellcolor{Gray}\textbf{Commentaires}} \\
+\hline
+\tt{\footnotesize GET /blog/89\newline
+	Accept:text/html} &
+\tt{\footnotesize 200 OK \newline
+	Content-Type:text/html} &
+La réponse est valide
+\\ \hline
+
+\tt{\footnotesize GET /blog/89\newline
+	Accept:application/json} &
+\tt{\footnotesize 200 OK \newline
+	Content-Type:text/html} &
+La réponse n'est pas valide car elle n'est pas au bon format. La réponse doit être au format JSON si ce format est supporté par CubicWeb. S'il n'est supporté une réponse \tt{406~Not~Acceptable} devait être retourné.  
+\\ \hline
+
+\tt{\footnotesize DELETE /blog/89} &
+\tt{\footnotesize 200 OK \newline
+	Content-Type:text/html} &
+La requête est traité comme une requête GET et le billet n'a pas été supprimé. CubicWeb devait retourné une réponse \tt{405~Method Not Allowed}.
+\\ \hline 
+
+\tt{\footnotesize PUT /blog/89} &
+\tt{\footnotesize 200 OK \newline
+	Content-Type:text/html} &
+La requête est traité comme une requête GET et le billet n'a pas été mis à jour. CubicWeb devait retourné une réponse \tt{405~Method Not Allowed}.
+\\ \hline 
+
+\tt{\footnotesize POST /blog} &
+\tt{\footnotesize 200 OK \newline
+	Content-Type:text/html} &
+La requête est traité comme une requête GET et le billet n'a pas été crée. CubicWeb devait retourné une réponse \tt{405~Method Not Allowed}.
+\\ \hline 
+\end{tabular}
+\caption{Résumé des tests}
+\label{table:tests}
+\end{table}
+
+\section{CubicWeb sans état}
+Comme a été expliqué dans la section \ref{edl}, CubicWeb utilise la session pour stocker l'état d'une requête pour pouvoir exécuter les prochaines requêtes de même client. Cette pratique ne respecte pas les principes de REST. Stocker des données rajoute sur les serveur nécessite des traitements supplémentaire and et réduit les performances. Implanter des solutions pour transférer l'état des requêtes vers le client était la tâche la plus prioritaire.
+
+Pour concevoir une solution pour ce problème j'ai commencé par déterminer le type de données qui sont stocker par serveur. CubicWeb stocke les dix dernières pages visitées par le client dans le but de savoir vers quelle page se rediriger lorsque le client annule une action dans une page donnée. CubicWeb stocke aussi les modifications effectuées sur une entité lors de son édition. Lorsque l'utilisateur valide les modifications, celles-ci sont appliquées à l'entité et la session est vidée. Ceci est dans le but de permettre à l'utilisateur de reprendre l'édition d'une entité même après avoir fermé la page d'édition. 
+
+Pour retrouvé la page vers laquelle se rediriger lorsque l'utilisateur annule une action, j'ai implanté une solution en JavaScript. JavaScript permet de naviguer dans l'historique de navigateur. Pour informer le serveur de l'annulation de l'action, une requête \glslink{ajax}{Ajax} est envoyée au serveur en utilisant les librairies JavaScript de CubicWeb. Cette solution est exécuté par le client ce qui réduit la charge du serveur. Cette solution a permet aussi de nettoyer une partie de code dans CubicWeb.
+
+Pour ne pas se servir de la session pour l'édition des entités, j'ai implanter une solution qui permet de passer les modifications dans les données de la requête validant l'édition. Avec cette solution l'utilisateur effectue ces modifications et celles-ci sont stockés dans le client. Cette solution permet de réduire le nombre de requêtes effectuées par le client lors d'édition d'une entité. En effet avec l'ancienne solution, une requête est envoyée pour chaque modification. Cette solution ne permet pas de reprendre une édition si la page d'édition a été fermé. Pour cette raison, cette solution n'a pas été retenue.
+
+\section{Opération CRUD avec Pyramid}
+
+\section{Négociation de contenu} 
+ 
