@@ -38,12 +38,12 @@ all: $(PROJNAME).pdf
 # missing file reference and interactively asking you for an alternative.
 
 $(PROJNAME).tex: $(TIKZ)
-	latexmk -pdf -pdflatex="pdflatex -interactive=nonstopmode" -use-make $<
+	latexmk -pdf -pdflatex="pdflatex -shell-escape" -use-make $<
 	
 
 
 $(PROJNAME).pdf: $(PROJNAME).tex
-	latexmk -pdf -pdflatex="pdflatex -interactive=nonstopmode" -use-make $<
+	latexmk -pdf -pdflatex="pdflatex -shell-escape" -use-make $<
 
 cleanall:
 	latexmk -C

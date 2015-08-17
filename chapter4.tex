@@ -1,7 +1,10 @@
+\newmintedfile{python}{frame=leftline,linenos}
+\newcolumntype{C}[1]{>{\centering}m{#1}
+}
 \chapter{Conception et développement}
 \section{État des lieux}
 \label{edl}
-Le premier objectif de mon projet de stage est de dresser l'état des lieux du respect des principes de l'architecture REST dans CubicWeb. Pour cela j'ai commencé par rédiger un document \glslink{cwep}{CWEP} (\textit{CubicWeb Enhancement Proposals}). J'ai commencé par réalisé une série de tests pour voir comment CubicWeb gère les requêtes web. J'ai d'abord crée une application CubicWeb utilisant le cube blog. J'ai lancé l'application et j'ai crée une entité qui sera utilisé pour les tests. Le tableau \ref{table:tests} illustre les résultats de ces tests. 
+Le premier objectif de mon projet de stage est de dresser l'état des lieux du respect des principes de l'architecture REST dans CubicWeb. Pour cela j'ai commencé par rédiger un document \glslink{cwep}{CWEP} (\textit{CubicWeb Evolution Proposals}). J'ai commencé par réalisé une série de tests pour voir comment CubicWeb gère les requêtes web. J'ai d'abord crée une application CubicWeb utilisant le cube blog. J'ai lancé l'application et j'ai crée une entité qui sera utilisé pour les tests. Le tableau \ref{table:tests} illustre les résultats de ces tests. 
 
 Les tests ont montré que CubicWeb ne respecte pas certaines spécification du protocole HTTP. En effet CubicWeb retourne des réponses non valides pour certaines requêtes HTTP. CubicWeb retourne des réponses ayant un format qui n'est pas géré par client. Les verbes HTTP n'ont pas de sémantique dans CubicWeb, en effet tous les verbes sont traité de la même manière. Pour avoir une réponse dans un format différent de \texttt{text/html}, un paramètre indiquant le format doit être inclut dans la requête. 
 
@@ -64,6 +67,68 @@ Pour retrouvé la page vers laquelle se rediriger lorsque l'utilisateur annule u
 Pour ne pas se servir de la session pour l'édition des entités, j'ai implanter une solution qui permet de passer les modifications dans les données de la requête validant l'édition. Avec cette solution l'utilisateur effectue ces modifications et celles-ci sont stockés dans le client. Cette solution permet de réduire le nombre de requêtes effectuées par le client lors d'édition d'une entité. En effet avec l'ancienne solution, une requête est envoyée pour chaque modification. Cette solution ne permet pas de reprendre une édition si la page d'édition a été fermé. Pour cette raison, cette solution n'a pas été retenue.
 
 \section{Opération CRUD avec Pyramid}
+Les framework web fournissent généralement des vues permettant de manipuler les données de l'application web. Ils fournissent les quatres opérations appelé \glslink{crud}{CRUD} suivantes :
+\begin{description}
+    \item[Create] créer une nouvelle données
+    \item[Read] retrouver une donnée
+    \item[Update] mettre à jour une donnée
+    \item[Delete] supprimer une donnée
+\end{description}
+
+CubicWeb permet de faire les opérations CRUD sur les entités définies par l'application. Certaines de opérations ne sont implantées d'une manière respectant les principes de REST qui sont expliquées dans le tableau \ref{table:crud}. En effet, l'opérarion permettant de créer une nouvelle respecte bien REST mais pas les trois autres. Les requêtes ne sont pas envoyées à la bonne URL.
+
+On avait décidé d'implanter ces opérations dans le projet Pyramid-CubicWeb afin de pouvoir utiliser les fonctionnalités fournies par le framework Pyramid. Pyramid facilite la création de vues et gère les requêtes HTTP. Créer une vue Pyramid revient à écrire une seule fonction qui a accès à toutes les informations de la requête. Pyramid permet l'utilisation des décorateur Python pour la configuration de la vue. Il permet de spécifier son URL, la méthode HTTP, le format de données qu'elle revoit... etc. Pyramid utilise la configuration de chaque pour réaliser le routage des requêtes vers les bonnes vues. 
+
+La figure \ref{fig:delete} est le code de la vue créée pour l'opération de suppression\footnote{seulement de 10 lignes de code}. La vue supprime l'entité qui est récupérée via le contexte de requête et renvoie une réponse HTTP de \texttt{204 No Content} indiquant le succès de la requête. L'URL de cette vue est \url{/etype/eid} qui est l'URL REST d'une entité qui définit son type et son identifiant. Cette URL est rajoutée dans la configuration de Pyramid (\ref{figpyramidconf}).
+
+    \begin{table}
+        \centering
+        \begin{tabular}{|>{\centering\arraybackslash}m{.4\textwidth}|>{\centering\arraybackslash}m{.4\textwidth}|}
+        \hline
+        \cellcolor{Gray} \textbf{Opération} & 
+        \cellcolor{Gray} \textbf{Méthode HTTP} \\ \hline
+        Create & POST \\ \hline
+        Read   & GET \\ \hline
+        Update & PUT ou PATCH \\ \hline
+        Delete & DELETE \\ \hline
+    \end{tabular}
+    \caption{Correspendence entre CRUD et les méthodes HTTP}
+    \label{table:crud}
+\end{table}
+
+
+\begin{figure}[htp]
+    \centering
+    \RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
+        \pythonfile[firstline=35, lastline=45]{examples/examples.py}
+    \caption{Une vue Pyramid pour l'opération de suppression}
+    \label{fig:delete}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
+        \pythonfile[firstline=48, lastline=55]{examples/examples.py}
+    \caption{Exemple de configuration avec Pyramid}
+    \label{fig:delete}
+\end{figure}
+
+
+
+Après avoir implanter ces vues, il fallait modifier CubicWeb pour les utiliser dans ses vues. On ne voulait pas modifier directement le code de CubicWeb car les vues sont dans le projet Pyramid-CubicWeb et celui-ci n'est pas toujours utilisé avec CubicWeb. Il a fallu modifier le CubicWeb seulement s'il est utilisé avec Pyramid-CubicWeb. J'ai crée alors des \textit{monkey patchs} pour réaliser cette tâche. Le code de ces \textit{monkey patchs} est écrit dans Pyramid-CubicWeb et modifie CubicWeb au moment de l'exécution. Si Pyramid-CubicWeb n'est pas utilisé, le code n'est pas exécuté et aucune modification ne sera faite.
 
 \section{Négociation de contenu} 
- 
+L'interface uniforme de l'architecture REST spécifie les représentations comme un moyen pour manipuler les ressources. Une représentation est le format utilisée pour la ressource. Le serveur peut proposer plusieurs format pour ses ressources et c'est au client de choisir lequel utiliser. Le protocole HTTP définit un moyen pour faire la négociation de contenu entre le client et le serveur. Le client spécifie dans l'entête \texttt{Accept} les représentation qu'il souhaite recevoir par ordre de priorité. Le serveur envoie la ressource dans la représentation la mieux adaptée au client. Si le serveur ne peut retourner la ressource en aucune des représentation envoyées par le client, une réponse de type \texttt{406 Not Acceptable} est retournée.
+
+CubicWeb ne prend pas en compte l'entête \texttt{Accept} lors de la sélection des vues. CubicWeb peut renvoyer une ressource au format HTML même si le client a demandé la représentation \glslink{json}{JSON} de celle-ci. Le seule moyen pour forcer CubicWeb à retourner un format spécifique est spécifier l'identifiant de la vue. Chaque vue CubicWeb dispose d'un identifiant et peut appelé en rajoutant à la requête un paramètre \texttt{vid} ayant comme valeur l'identifiant de la vue. Deux solution ont été implantées pour des projets client mais n'ont pas été intégré dans CubicWeb. L'une des solutions utilise le mécanisme de sélection de CubicWeb. Le mécanisme de sélection fonctionne avec des prédicats. Chaque vue est associer à un prédicat et lors de la sélection les prédicat exécutés et chaque vue se voit affecter un score. La vue ayant le score le plus haut est alors sélectionné et est exécutée. Cette solution fonctionne mais ne retourne pas la bonne réponse dans le cas où le format demandé par client n'est supporté. L'autre solution implante la négociation de contenu dans une vue. Cette est toujours sélectionnée et c'est elle qui décide selon l'entête \texttt{Accept} vers quelle vue se rediriger. Cette solution ne retourne pas aussi une bonne réponse en cas d'échec de négociation.
+
+La négociation de contenu est disponible dans Pyramid. Pyramid implante la fonctionnalité de négociation de contenu comme ça été spécifié par le protocole HTTP. Les vues Pyramid peuvent être configurées pour indiquer le format qu'elle retourne. Pyramid utilise ces informations durant la phase de négociation de contenu. J'ai alors modifié la configuration des vues crée pour réaliser les opérations CRUD. Pour les vues CubicWeb nous avons décidé de s'appuyer sur convention pour choisir les les identifiants des vues. Les vues qui retourne un contenu de type \texttt{text/html} auront comme \texttt{primary} comme identifiant. Les autres vues auront l'identifiant \texttt{primary.format}, une vue qui retourne de contenu au format \glslink{json}{JSON} aura l'identifiant \texttt{primary.json}. J'ai crée alors des vues pour les format pris en charge par CubicWeb et dans ces vues on redirige vers la vue CubicWeb.   
+
+
+\begin{figure}[htp]
+    \centering
+    \RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
+        \pythonfile[firstline=58, lastline=79]{examples/examples.py}
+    \caption{Une vue Pyramid retournant des entities au format JSON}
+    \label{fig:delete}
+\end{figure}
