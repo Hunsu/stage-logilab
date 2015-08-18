@@ -29,9 +29,14 @@
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[style=long,toc,xindy,acronym, sort=use]{glossaries}
+\usepackage[style=long,
+			toc,
+			xindy={language=french, codepage=utf8},
+			acronym,
+			]{glossaries}
 \makeglossaries
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newacronym{REST}{REST}{REpresentational State Transfer}
 \newacronym{yams}{YAMS}{Yet Another Magic Schema}
 \newacronym{rql}{RQL}{Relation Query Language}
@@ -50,6 +55,15 @@
 \newacronym{cwep}{CWEP}{CubicWeb Evolution Proposal}
 \newacronym{ajax}{AJAX}{Asynchronous JavaScript and XML}
 \newacronym{crud}{CRUD}{Create, Read, Update, Delete}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newlength\marginwidth
@@ -91,7 +105,15 @@
 \include{conclusion}
 
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newglossaryentry{scrum}
+{
+	name={Scrum},
+	description={Scrum est méthode agile créée en 2002 qui s'appuie sur le découpage d'un projet en plusieurs itération appelées sprint d'une durée qui varie de deux semaine à un mois.},
+}
+
+\glsaddall
 \printglossaries
 
 

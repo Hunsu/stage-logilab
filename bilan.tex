@@ -1,9 +1,13 @@
 \chapter{Bilan}
 \lipsum[8]
 \section{Bilan des résultats}
-\lipsum[14]
-\lipsum[5]
-\lipsum[6]
+Le travaille effectué pendant ce stage a permis de dresser l'état des lieux du respect des contraintes de l'architecture \glslink{REST}{REST} dans CubicWeb. Un document \glslink{cwep} a été rédigé qui détaillent les points de CubicWeb ne respectant pas REST. Le document classe le framework web selon le modèle de Martin Fowler\cite{rmm}. Ce modèle permet de classer un framework selon quatre niveau et définit comment passer d'un niveau à un autre. Je n'ai pas eu beaucoup de retour le contenu de ce document, certains points reste des questions ouvertes. Les documents CWEP sont utilisés par développeurs de CubicWeb pour implanter de nouvelles évolutions de framework. Ces points vont être alors abordés dans l'avenir et des solutions peuvent être implantés pour les corriger. 
+
+J'ai pu proposer des solutions pour certains points. Une solution que j'ai implémenté qui permettait de supprimer le mécanisme de \textit{breadcrumbs} a été intégrée dans CubicWeb. Cette solution permet de réduire la quantité de donnés stockée sur le serveur et le nombre de traitements réalisés par celui-ci. J'ai aussi implanté dans Pyramid-CubicWeb des vues permettant de faire les opération \glslink{crud}{CRUD} en respectant REST. La solution fonctionne dans CubicWeb lorsque celui-ci est utilisé avec Pyramid-CubicWeb. Cette solution est toujours dans la phase d'intégration.
+
+Enfin j'ai implanté la négociation de contenu qui va permettre au client d'une application CubicWeb de choisir le format de données à utiliser via les entête HTTP \texttt{Accept}. Cette solution respecte bien les spécification de protocole HTTP et ainsi les principes de REST. Cette solution est aussi dans la d'intégration.
+
+Durant le stage j'ai participé aux VSprint et j'ai contribué à améliorer les outils interne de Logilab. J'ai développé une solution permettant d'avoir la différence entre une la dernière version d'une révision et une version obsolète. C'est l'une des fonctionnalités les plus demandé par le personnel de Logilab.     
 \subsection{Atteinte des objectifs}
 \lipsum[14]
 \lipsum[5]
@@ -15,7 +19,7 @@
 \lipsum[5]
 
 \section{Bilan personnel}
-\lipsum[14]
+Ce stage est très enrichissant sur plan personnel. Il m'a permis de mettre en application les connaissances que j'ai acquises durant mon cursus universitaire. Il m'a aussi permis d'acquérir de nouvelles connaissances techniques. Ce stage était l'occasion pour moi de contribuer à un projet sous libre. Grâce à cette expérience j'ai acquis le bonnes pratiques à faire pour contribuer de manière efficace aux projets libres.  
 \subsection{Connaissances acquises}
 \lipsum[14]
 \lipsum[5]
