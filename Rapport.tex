@@ -32,7 +32,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[style=super,
-			toc, nopostdot,
+			toc,
 			xindy={language=french, codepage=utf8},
 			acronym,
 			]{glossaries}
@@ -94,6 +94,51 @@
 
 
 \begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newglossaryentry{scrum}
+{
+	name={Scrum},
+	description={Scrum est une méthode agile créée en 2001 par Jeff Sutherland et Ken Schwaber qui s'appuie sur le découpage d'un projet en plusieurs itérations appelées sprint d'une durée qui varie de deux semaines à un mois. Le processus défini par cette méthode s'articule autour d'une équipe unie cherchant à atteindre un but précis},
+}
+
+\newglossaryentry{methodexp}
+{
+	name={M\'ethode XP},
+	description={La méthode XP ou \textit{eXtreme Programming} est une méthode agile de gestion de projet informatiques. Contrairement à Scrum, la méthode XP définit des pratiques pour la réalisation de produit. Comme ces pratiques sont liées au génie logiciel, cette méthode ne peut être utilisée que pour les projets informatiques. },
+}
+
+\newglossaryentry{kanban}
+{
+	name={Kanban},
+	description={La méthode Kanban permet, à l'aide d'un tableau, de visualiser le processus de traitement d'une tâche. Les colonnes du tableau sont les états possibles pour une tâche et chaque colonne contient un nombre maximum prédéfini de tâches simultanées. Les tâches passent alors d'un état à un autre selon l'avancement de projet}
+}
+
+\newglossaryentry{pairprogramming}
+{
+	name={Programmation en binôme},
+	description={C'est une méthode de travail dans laquelle deux développeurs travaillent ensemble sur un poste de travail. Une personne rédige le code et une autre observe pour déceler des problèmes dans le code écrit par l'autre personne. C'est l'une pratiques de la méthode XP}
+}
+
+\newglossaryentry{hypermedia}
+{
+	name={Hyperm\'edia},
+	description={Hypermédia est une extension de l'hypertexte à des données multimédias comme des images, sons et vidéos}
+}
+
+\newglossaryentry{hateoas}
+{
+	name={HATEOAS},
+	description={\textit{Hypermedia as the Engine of Application State} (Hypermédia comme moteur d'état de l'application) est une contrainte de l'architecture REST qui la distingue des autres architectures. Le principe c'est que le client interagie avec une application en utilisant des hypermédia inclus dans la réponse de l'application. Ceci permet de faire évoluer l'interface fournie par le serveur sans changer le client}  
+}
+
+\newglossaryentry{monkeypatching}
+{
+	name={Monkey patching},
+	description={\textit{Monkey patching} est une façon de modifier ou d'étendre du code sans modifier le code source original. Ceci est possible avec les langages de programmations dynamiques}  
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \include{titlepage}
 \include{abstract}
 \include{thanks}
@@ -115,48 +160,6 @@
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newglossaryentry{scrum}
-{
-	name={Scrum},
-	description={Scrum est une méthode agile créée en 2001 par Jeff Sutherland et Ken Schwaber qui s'appuie sur le découpage d'un projet en plusieurs itérations appelées sprint d'une durée qui varie de deux semaines à un mois. Le processus défini par cette méthode s'articule autour d'une équipe unie cherchant à atteindre un but précis},
-}
-
-\newglossaryentry{methodexp}
-{
-	name={M\'ethode XP},
-	description={La méthode XP ou \textit{eXtreme Programming} est une méthode agile de gestion de projet informatiques. Contrairement à Scrum, la méthode XP définit des pratiques pour la réalisation de produit. Comme ces pratiques sont liées au génie logiciel, cette méthode ne peut être utilisée que pour les projets informatiques },
-}
-
-\newglossaryentry{kanban}
-{
-	name={Kanban},
-	description={La méthode Kanban permet, à l'aide d'un tableau, de visualiser le processus de traitement d'une tâche. Les colonnes du tableau sont les états possibles pour une tâche et chaque colonne contient un nombre maximum prédéfini de tâches simultanées. Les tâches passent alors d'un état à un autre selon l'avancement de projet}
-}
-
-\newglossaryentry{pairprogramming}
-{
-	name={Programmation en binôme},
-	description={C'est une méthode de travail dans laquelle deux développeurs travaillent ensemble sur un poste de travail. Une personne rédige le code et une autre observe pour déceler des problèmes dans le code écrit par l'autre personne. C'est l'une pratiques de la méthode XP}
-}
-
-\newglossaryentry{hypermedia}
-{
-	name={Hyperm\'edia},
-	description={Hypermédia est une extension de l'hypertexte à des données multimédias comme des images, sons et vidéos.}
-}
-
-\newglossaryentry{hateoas}
-{
-	name={HATEOAS},
-	description={\textit{Hypermedia as the Engine of Application State} (Hypermédia comme moteur d'état de l'application) est une contrainte de l'architecture REST qui la distingue des autres architectures. Le principe c'est que le client interagie avec une application en utilisant des hypermédia inclus dans la réponse de l'application. Ceci permet de faire évoluer l'interface fournie par le serveur sans changer le client}  
-}
-
-\newglossaryentry{monkeypatching}
-{
-	name={Monkey patching},
-	description={\textit{Monkey patching} est une façon de modifier ou d'étendre du code sans modifier le code source original. Ceci est possible avec les langages de programmations dynamiques.}  
-}
 
 
 \printglossaries

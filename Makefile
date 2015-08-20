@@ -37,12 +37,15 @@ all: $(PROJNAME).pdf
 # missing file reference and interactively asking you for an alternative.
 
 TIKZPDF: $(TIKZTEX)
-	latexmk -pdf -pdflatex="pdflatex -shell-escape" -use-make $<
+	pdflatex $<
 	
 $(PROJNAME).tex: TIKZPDF
 
 $(PROJNAME).pdf: $(PROJNAME).tex
-	latexmk -pdf -pdflatex="pdflatex -shell-escape" -use-make $<
+	pdflatex -shell-escape $<
+	makeglossaries $(PROJNAME)
+	pdflatex -shell-escape $(PROJNAME) $<
+	pdflatex -shell-escape $<
 
 cleanall:
 	latexmk -C
