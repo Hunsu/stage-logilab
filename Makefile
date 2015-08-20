@@ -4,8 +4,7 @@
 #
 # Change only the variable below to the name of the main tex file.
 PROJNAME=Rapport
-TIKZ=$(wildcard tikz/*.tex)
-
+TIKZTEX=$(wildcard tikz/*.tex)
 # You want latexmk to *always* run, because make does not have all the info.
 # Also, include non-file targets in .PHONY so they are run regardless of any
 # file of the given name existing.
@@ -37,10 +36,10 @@ all: $(PROJNAME).pdf
 # -interactive=nonstopmode keeps the pdflatex backend from stopping at a
 # missing file reference and interactively asking you for an alternative.
 
-$(PROJNAME).tex: $(TIKZ)
+TIKZPDF: $(TIKZTEX)
 	latexmk -pdf -pdflatex="pdflatex -shell-escape" -use-make $<
 	
-
+$(PROJNAME).tex: TIKZPDF
 
 $(PROJNAME).pdf: $(PROJNAME).tex
 	latexmk -pdf -pdflatex="pdflatex -shell-escape" -use-make $<

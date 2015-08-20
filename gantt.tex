@@ -1,0 +1,69 @@
+\newgeometry{margin=.7in}
+\definecolor{barblue}{RGB}{153,204,254}
+\definecolor{groupblue}{RGB}{51,102,254}
+\definecolor{linkred}{RGB}{165,0,33}
+\sffamily
+\setganttlinklabel{s-s}{Début \`a d\'ebut (DD)}
+\setganttlinklabel{f-s}{Fin \`a d\'ebut (FD)}
+\uselanguage{French}
+\languagepath{French}
+\begin{landscape}
+\begin{figure}
+\centering
+   \begin{ganttchart}[x unit=1.9mm, 
+                      y unit chart=1.2cm, 
+                      time slot format=isodate, 
+                      %compress calendar,
+                      vgrid,
+                      %today=2014-05-17,
+                      %today label=aujourd'hui,
+                      %today label font=\scshape,
+                      newline shortcut=true,
+                      title/.append style={fill=blue!20},
+                      title label font=\sffamily\bfseries\color{white},
+                      title label node/.append style={below=-1.6ex},
+                      title left shift=.05,
+                      title right shift=-.05,
+                      title height=1,
+                      bar/.append style={draw=none, fill=black!63},
+                      bar label node/.append style={align=center, font=\small},
+                      bar incomplete/.append style={fill=barblue},
+                      bar height=.4,
+                      bar label font=\normalsize\color{black!50},
+                      link/.style={-latex, draw=red, fill=red},
+                      progress = today,
+                      progress label text = {},
+                     ]
+                      {2015-05-04}{2015-08-28}
+   \gantttitlecalendar{month=name} \\ 
+   
+    \ganttbar[progress=100]{Initiation\ganttalignnewline à CubicWeb}{2015-05-04}{2015-05-07} \\
+    
+    \ganttbar[progress=100]{\'Etat des lieux}{2015-05-10}{2015-05-14} \\
+    
+    \ganttbar[progress=100]{Rédaction\ganttalignnewline de la CWEP}{2015-05-17}{2015-05-31} \\
+    
+    \ganttbar[progress=100]{opération CRUD}{2015-06-01}{2015-08-28} \\
+    
+    \ganttbar[progress=100]{CubicWeb\ganttalignnewline sans état}{2015-06-08}{2015-06-24} \\
+    
+    \ganttbar[progress=100]{VSprint}{2015-06-17}{2015-06-22} \\
+    
+    
+    \ganttbar[progress=100]{Négociation\ganttalignnewline de contenu}{2015-06-24}{2015-08-28} \\
+    
+    \ganttbar[progress=100]{VSprint}{2015-07-14}{2015-07-14} \\
+    
+    \ganttbar[progress=100]{Gestion de\ganttalignnewline requêtes RQL}{2015-07-17}{2015-07-21}\\
+    
+    \ganttbar[progress=100]{Rapport de\ganttalignnewline stage}{2015-08-10}{2015-08-21} \\
+    
+    \ganttlink[link type=f-s]{elem0}{elem1}
+    \ganttlink[link type=f-s]{elem1}{elem2}
+   
+   \end{ganttchart}
+\caption{Planning réel de stage}
+\label{fig:gantt}
+\end{figure}
+\end{landscape}
+\restoregeometry
