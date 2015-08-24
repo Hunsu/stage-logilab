@@ -37,7 +37,7 @@ libre on peut citer :
 \begin{description} 
     \item[Pylint]\hfill\\ 
         Un logiciel de vérification de code source et de la qualité du code 
-        pour le langage Python. Il utilise les recommandations officielles de 
+        pour le langage Python. Il utilise entre autres les recommandations officielles de 
         style de la \glslink{pep}{PEP} ~8.  
         \item[CubicWeb]\hfill\\ 
             Un framework pour la réalisation d’applications web. Il supporte 
@@ -47,8 +47,8 @@ libre on peut citer :
             s’inspirant de langage SQL permettant d'interroger des sources de 
             données.  
         \item[Mercurial] \hfill\\ 
-            plusieurs outils autour de logiciel de gestion de version Mercurial. 
-            Logilab propose Plusieurs extensions au logiciel et une application 
+            plusieurs outils autour du logiciel de gestion de version Mercurial. 
+            Logilab propose plusieurs extensions au logiciel et une application 
             de revue de code pour les entrepôts Mercurial.  
 \end{description}
 
@@ -61,19 +61,15 @@ l'intranet de Logilab. En octobre 2008, Logilab sort le framework sous la licenc
 libre \glslink{lgpl}{LGPL}. En 2013, CubicWeb est lauréat du concours 
 Dataconnexions 2013, organisé par Etalab\cite{etalab}.
 
-Le framework permet à l'utilisateur de se concentrer sur le type de données
-manipulées par son application. Une fois le schéma de données est défini à
+Le framework permet à l'utilisateur de se concentrer sur le modèle de données
+manipulé par son application. Une fois ce modèle de données défini dans un schéma à
 l'aide de langage \glslink{yams}{YAMS}, CubicWeb génère des vues permettant de
 manipuler ces données avec différant types de formats (\glslink{html}{HTML},
 \glslink{rdf}{RDF}, \glslink{json}{JSON}, \glslink{jsonld}{JSON-LD},
 \glslink{xml}{XML}, etc.). CubicWeb supporte plusieurs sources de données comme
-les bases \glslink{sql}{SQL}, les annuaires \glslink{ldap}{LDAP}, les entrepôts
-de donnés Mercurial. Pour faciliter l'utilisation de CubicWeb dans le
-développement utilisant des méthodes agiles, CubicWeb fournit un outil pour
-réaliser la migration de l'application vers des versions plus récentes. Cet
-outil permet de changer le schéma de données à tout moment durant le
-développement de l'application.
-
+les bases de données \glslink{sql}{SQL}, les annuaires \glslink{ldap}{LDAP}, ou encore les entrepôts
+de donnés Mercurial. Conçu pour être utiliser dans le cadre de méthodes agiles, CubicWeb fournit des outils pour
+faire évoluer aisément le modèle données de l'application.
 
 Afin d'accélérer le développement d'une application, CubicWeb permet
 l'utilisation de composants appelés \emph{cubes}. Un cube est un composant
@@ -92,12 +88,12 @@ contrôleurs, services, etc.). Ces objets sont chargés au lancement de
 l'application et c'est le framework qui décide quel objet utiliser en fonction
 du contexte de la requête de l'utilisateur. Le framework se base sur le
 contexte pour attribuer des scores pour les \textit{appobjects} disponibles et
-pouvoir ainsi utiliser le meilleur adapté à la requête de l'utilisateur.  
+pouvoir ainsi utiliser le plus adapté au contexte.  
 
 \section{Pyramid-CubicWeb} Un projet appelé Pyramid-Cubicweb est en
 développement depuis 2014 pour permettre de coupler CubicWeb avec le framework
 web Pyramid. Le but de ce projet est de remplacer Twisted pour servir les
-applications CubiccWeb. L'utilisation de Pyramid-CubicWeb permet aussi d'avoir
+applications CubicWeb. L'utilisation de Pyramid-CubicWeb permet aussi d'avoir
 accès aux fonctionnalités des deux framework. Logilab a commencé de migrer ces
 applications existantes pour utiliser Pyramid-CubicWeb.
  
@@ -130,7 +126,7 @@ un système performant, scalable et fiable. Les six contraintes sont :
     \item[Sans état]\hfill\\ 
         C'est le client qui est responsable de stocker l'état de ses requêtes. 
         La requête du client doit contenir toutes les informations nécessaires 
-        pour son exécution par le serveur. Cela permet d'avoir un système scalable. 
+        pour son exécution par le serveur. Cela permet d'avoir un système qui passe à l'échelle. 
         En effet en rajoutant un deuxième serveur, les requêtes des clients peuvent 
         être partagés entre les deux serveurs d'une manière égale\footnote{Si l'état 
         est stocké par le serveur, cet état doit être dupliqué sur chaque serveur.}.
@@ -146,7 +142,7 @@ un système performant, scalable et fiable. Les six contraintes sont :
         \begin{itemize} 
             \item Chaque ressource doit avoir un identifiant 
             \item L'utilisation des représentations pour manipuler les ressources 
-            \item Les requêtes et réponses sont auto-descriptifs 
+            \item Les requêtes et réponses sont auto-descriptives 
             \item Hypermédia comme moteur d'état de l'application (\glslink{hateoas}{HATEOAS})	 
         \end{itemize} 
 

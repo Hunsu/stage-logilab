@@ -19,8 +19,8 @@ protocole \glslink{http}{HTTP}. En effet, CubicWeb retourne des réponses non
 valides pour certaines requêtes HTTP. Par exemple, CubicWeb retourne des
 réponses ayant un format qui n'est pas géré par client. Les verbes HTTP n'ont
 pas de sémantique dans CubicWeb, tous les verbes sont traités de la même
-manière. Il ne fournit pas un moyen pour faire la négociation de contenu,
-l'entête \texttt{Accept} est ignoré par celui-ci.  
+manière. Il ne fournit pas un moyen pour faire la négociation de contenu :
+l'en-tête \texttt{Accept} est ignoré par celui-ci.  
 
 CubicWeb utilise la session pour stocker des données relatives à chaque requête
 HTTP. Lors de la modification d'une entité, les changement effectuées sont
@@ -67,19 +67,19 @@ pas possible de mettre en cache les réponses pour des requêtes POST}.
 \tt{\footnotesize DELETE /blog/89} & \tt{\footnotesize 200 OK \newline
                 Content-Type:text/html} & La requête est traitée comme une
                     requête GET et le billet n'a pas été supprimé. CubicWeb
-                    devait retourné une réponse \tt{405~Method Not Allowed}.
+                    devrait retourner une réponse \tt{405~Method Not Allowed}.
                     \\ \hline 
 
 \tt{\footnotesize PUT /blog/89} & \tt{\footnotesize 200 OK \newline
                 Content-Type:text/html} & La requête est traitée comme une
                     requête GET et le billet n'a pas été mis à jour. CubicWeb
-                    devait retourné une réponse \tt{405~Method Not Allowed}.
+                    devrait retourner une réponse \tt{405~Method Not Allowed}.
                     \\ \hline 
 
 \tt{\footnotesize POST /blog} & \tt{\footnotesize 200 OK \newline
                 Content-Type:text/html} & La requête est traitée comme une
-                    requête GET et le billet n'a pas été crée. CubicWeb devait
-                    retourné une réponse \tt{405~Method Not Allowed}.  \\
+                    requête GET et le billet n'a pas été crée. CubicWeb devrait
+                    retourner une réponse \tt{405~Method Not Allowed}.  \\
                 \hline \end{tabular} \caption{Résumé des tests}
             \label{table:tests} \end{table}
 
@@ -138,7 +138,7 @@ CubicWeb. En effet, l'opération permettant de retrouver une entité utilise bie
 la bonne méthode mais pas les trois autres. Aussi, les requêtes ne sont pas
 envoyées à la bonne \glslink{url}{URL}.
 
-On avait décidé d'implanter ces opérations dans le projet Pyramid-CubicWeb afin
+On a décidé d'implanter ces opérations dans le projet Pyramid-CubicWeb afin
 de pouvoir utiliser les fonctionnalités fournies par le framework Pyramid.
 Pyramid facilite la création des vues et gère les requêtes HTTP. Créer une vue
 Pyramid revient à écrire une seule fonction qui a accès à toutes les
@@ -187,8 +187,8 @@ son identifiant. Cette URL est rajoutée dans la configuration de Pyramid
 
 
 
-Après avoir implanté ces vues, il fallait modifier CubicWeb pour les utiliser
-dans ses vues. On ne voulait pas modifier directement le code de CubicWeb car
+Après avoir implanté ces vues, il fallait modifier CubicWeb pour les utiliser. 
+On ne voulait pas modifier directement le code de CubicWeb car
 les vues sont dans le projet Pyramid-CubicWeb et celui-ci n'est pas toujours
 utilisé avec CubicWeb. Il a fallu modifier CubicWeb seulement s'il est utilisé
 avec Pyramid-CubicWeb. J'ai crée alors des
@@ -200,16 +200,16 @@ code n'est pas exécuté et aucune modification ne sera faite.
 \section{Négociation de contenu} 
 L'interface uniforme de l'architecture REST spécifie les représentations comme 
 un moyen pour manipuler les ressources. Une représentation est le format utilisé 
-pour représenter la ressource. Le serveur peut proposer plusieurs format pour ses 
+pour représenter la ressource. Le serveur peut proposer plusieurs formats pour ses 
 ressources et c'est au client de choisir lequel utiliser. Le protocole HTTP définit 
 un moyen pour faire la négociation de contenu entre le client et le serveur. Le 
-client spécifie dans l'entête \texttt{Accept} les représentations qu'il souhaite 
+client spécifie dans l'en-tête \texttt{Accept} les représentations qu'il souhaite 
 recevoir par ordre de priorité. Le serveur envoie la ressource dans la 
 représentation la mieux adaptée au client. Si le serveur ne peut pas retourner la 
-ressource en aucune des représentations envoyées par le client, une réponse de type
+ressource en aucune des représentations demandées par le client, une réponse de type
 \texttt{406~Not~Acceptable} doit être retournée.
 
-CubicWeb ne prend pas en compte l'entête \texttt{Accept} lors de la sélection
+CubicWeb ne prend pas en compte l'en-tête \texttt{Accept} lors de la sélection
 des vues. CubicWeb peut renvoyer une ressource au format HTML même si le client
 a demandé la représentation \glslink{json}{JSON} de celle-ci. Le seul moyen
 pour forcer CubicWeb à retourner un format spécifique est de spécifier
@@ -225,8 +225,8 @@ sélectionnée et son contenu est retourné. Cette solution fonctionne mais ne
 retourne pas la bonne réponse dans le cas où le format demandé par le client
 n'est pas supporté. L'autre solution implante la négociation de contenu dans
 une vue. Cette vue est toujours sélectionnée et c'est elle qui décide selon
-l'entête \texttt{Accept} vers quelle vue se rediriger. Cette solution ne
-retourne pas aussi une bonne réponse en cas d'échec de négociation.
+l'en-tête \texttt{Accept} vers quelle vue se rediriger. Cette solution ne
+retourne pas non plus une bonne réponse en cas d'échec de négociation.
 
 La négociation de contenu est disponible dans Pyramid. Pyramid implante la
 fonctionnalité de négociation de contenu comme ça été spécifié par le protocole
