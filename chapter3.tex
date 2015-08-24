@@ -1,60 +1,149 @@
-\chapter{Démarche méthodologique}
-\section{Organisation}
-\subsection{Méthodes agiles}
-Pour la réalisation des projets, Logilab laisse à ses clients le choix  entre une méthode de gestion de projet traditionnelle et une méthode agile mais Logilab privilégie cette dernière. La méthode agile utilisée par Logilab est très influencée par la méthode \glslink{methodexp}{XP}, \glslink{scrum}{Scrum} et \glslink{kanban}{Kanban}. En utilisant une méthode agile, un projet est développé d'une manière itératif et incrémental. Logilab et le client définissent les fonctionnalités à développer durant une itération. Ces fonctionnalités seront transformées en tâches (\textit{tickets}) et sont réalisées par ordre de priorité. La fin d'une itération donne lieu à un ensemble de livrables qui seront validés par le client. 
+\chapter{Démarche méthodologique} 
+\section{Organisation} 
+\subsection{Méthodes agiles} 
+Pour la réalisation des projets, Logilab laisse à ses clients le choix
+entre une méthode de gestion de projet traditionnelle et une méthode agile mais
+Logilab privilégie cette dernière. La méthode agile utilisée par Logilab est
+très influencée par la méthode \glslink{methodexp}{XP}, \glslink{scrum}{Scrum}
+et \glslink{kanban}{Kanban}. En utilisant une méthode agile, un projet est
+développé d'une manière itératif et incrémental. Logilab et le client
+définissent les fonctionnalités à développer durant une itération. Ces
+fonctionnalités seront transformées en tâches (\textit{tickets}) et sont
+réalisées par ordre de priorité. La fin d'une itération donne lieu à un
+ensemble de livrables qui seront validés par le client. 
 
-La méthode agile a été appliquée pour le développement du projet de stage. On avait utilisé principalement la méthode Kanban avec l'application de certaines pratiques de la méthode \glslink{xp}{XP} et de Scrum. Nous utilisons un tableau Kanban avec les colonnes suivantes : 
-\begin{description}
-	\item[backlog] l'ensemble des tâches à réaliser
-	\item[ready] les tâches qui peuvent être réalisées et qui ne dépendent pas d'autres tâches non finies
-	\item[doing] les tâches en cours de réalisation
-	\item[review] les tâches en attente de revue.
-\end{description}
-\begin{figure}
-\centering
-  \includegraphics[width=\textwidth]{tikz/kanban.pdf}
-  \caption{Cycle de vie d'une tâche avec la méthode Kanban}
-  \label{fig:kanban}
+La méthode agile a été appliquée pour le développement du projet de stage. On
+avait utilisé principalement la méthode Kanban avec l'application de certaines
+pratiques de la méthode \glslink{xp}{XP} et de Scrum. Nous utilisons un tableau
+Kanban avec les colonnes suivantes : 
+
+\begin{description} 
+    \item[backlog] l'ensemble des tâches à réaliser 
+    \item[ready] les tâches qui peuvent être réalisées et qui ne dépendent pas 
+        d'autres tâches non finies
+    \item[doing] les tâches en cours de réalisation 
+    \item[review] les tâches en attente de revue.  
+\end{description} 
+
+\begin{figure} 
+    \centering
+    \includegraphics[width=\textwidth]{tikz/kanban.pdf} 
+    \caption{Cycle de vie d'une tâche avec la méthode Kanban} 
+    \label{fig:kanban} 
 \end{figure}
-On commence par établir un ensemble de tâches sous forme de post-it qui sont ajoutées à la colonne \textit{backlog} du tableau Kanban. Les tâches qui peuvent être réalisées passent à la colonne \textit{ready}. La tâche la plus prioritaire passe à la colonne \textit{doing} du tableau. Une fois qu'une tâche est finie, elle passe à la colonne \textit{review} d'une autre personne. La personne ayant des tâches dans sa colonne \textit{review} s'occupe de faire la revue pour celles-ci et c'est lui qui décide si la tâche est finie ou pas. Si la tâche est considérée comme finie, le code développé sera intégré dans le projet, et dans le cas contraire la tâche retourne à la colonne \textit{ready} ou \textit{doing} de la personne travaillant sur la tâche. 
+        
+On commence par établir un ensemble de tâches sous forme de post-it qui sont 
+ajoutées à la colonne \textit{backlog} du tableau Kanban. Les tâches qui peuvent 
+être réalisées passent à la colonne \textit{ready}. La tâche la plus prioritaire 
+passe à la colonne \textit{doing} du tableau. Une fois qu'une tâche est finie, 
+elle passe à la colonne \textit{review} d'une autre personne. La personne ayant 
+des tâches dans sa colonne \textit{review} s'occupe de faire la revue pour 
+celles-ci et c'est lui qui décide si la tâche est finie ou pas. Si la tâche est
+considérée comme finie, le code développé sera intégré dans le projet, et dans 
+le cas contraire la tâche retourne à la colonne \textit{ready} ou \textit{doing} 
+de la personne travaillant sur la tâche. 
 
-Des pratiques de la méthode XP sont appliquées tout au long du développement. Un document regroupant les bonnes pratiques et les conventions de codage est utilisé par Logilab et ces règles doivent être appliquées au code écrit. Le développement est piloté par les tests (\glslink{tdd}{TDD}), les tests sont développés avant les fonctionnalités. Cette pratique permet d'écrire un minimum de code qui fait passer les tests, ce qui minimise le temps de développement. Une fois les tests passent, le code passe à la phase de \textit{refactoring}, durant cette phase plusieurs opérations peuvent être faites dans le but d'améliorer la qualité de code (renommage, extraction des méthodes, utilisation des design pattern, etc.). \`A la fin de la phase de \textit{refactoring}, le code est envoyé à l’entrepôt distant. Une personne est choisi pour faire une première revue de code. La personne faisant la première revue peut demander la réalisation de tâches supplémentaires avant de le passer à phase d'intégration. 
+Des pratiques de la méthode XP sont appliquées tout au long du développement.
+Un document regroupant les bonnes pratiques et les conventions de codage est
+utilisé par Logilab et ces règles doivent être appliquées au code écrit. Le
+développement est piloté par les tests (\glslink{tdd}{TDD}), les tests sont
+développés avant les fonctionnalités. Cette pratique permet d'écrire un minimum
+de code qui fait passer les tests, ce qui minimise le temps de développement.
+Une fois les tests passent, le code passe à la phase de \textit{refactoring},
+durant cette phase plusieurs opérations peuvent être faites dans le but
+d'améliorer la qualité de code (renommage, extraction des méthodes, utilisation
+des design pattern, etc.). \`A la fin de la phase de \textit{refactoring}, le
+code est envoyé à l’entrepôt distant. Une personne est choisi pour faire une
+première revue de code. La personne faisant la première revue peut demander la
+réalisation de tâches supplémentaires avant de le passer à phase d'intégration. 
 
-\begin{figure}
-\centering
-  \includegraphics[width=.7\textwidth]{tikz/review.pdf}
-  \caption{Le système de revue à Logilab}
-  \label{fig:review}
+\begin{figure} 
+    \centering 
+    \includegraphics[width=.7\textwidth]{tikz/review.pdf}
+    \caption{Le système de revue à Logilab} 
+    \label{fig:review} 
 \end{figure}
 
-Tous les jours nous effectuions une réunion devant le tableau Kanban où chacun explique aux autres les tâches qu'il avait réalisé, les problèmes qu'il rencontre et les tâches sur lesquelles il va travaillé ensuite. Cette réunion permet de savoir l'avancement de tous les projets et permet le partage des idées sur les points bloquants. Chaque semaine, le personnel de Logilab répondent à un mail de RSH pour expliquer ce s'est bien ou mal passé durant la semaine précédente, le travail réalisé et le travail à faire durant la semaine. Une réunion rétrospective est organisée tous les mois durant laquelle nous discutant de ce qui a été fait durant le mois précédent et des problèmes rencontrés et nous proposons des solutions pour ceux-ci. 
+Tous les jours nous effectuions une réunion devant le tableau Kanban où chacun
+explique aux autres les tâches qu'il avait réalisé, les problèmes qu'il
+rencontre et les tâches sur lesquelles il va travaillé ensuite. Cette réunion
+permet de savoir l'avancement de tous les projets et permet le partage des
+idées sur les points bloquants. Chaque semaine, le personnel de Logilab
+répondent à un mail de RSH pour expliquer ce s'est bien ou mal passé durant la
+semaine précédente, le travail réalisé et le travail à faire durant la semaine.
+Une réunion rétrospective est organisée tous les mois durant laquelle nous
+discutant de ce qui a été fait durant le mois précédent et des problèmes
+rencontrés et nous proposons des solutions pour ceux-ci. 
 
-\subsection{VSprint}
-Le personnel de l'agence de Toulouse consacre la journée du vendredi de tous les quinze jours pour un VSprint. Durant le VSprint, tous le personnel développent ou améliorent les outils internes de l'entreprise. Chaque binôme se voit affecter un sujet par le directeur de l'agence. Le sujet est ensuite développé en \glslink{pairprogramming}{\textit{pair programming}}.
+\subsection{VSprint} 
+Le personnel de l'agence de Toulouse consacre la journée du vendredi de tous 
+les quinze jours pour un VSprint. Durant le VSprint, tous le personnel développent 
+ou améliorent les outils internes de l'entreprise. Chaque binôme se voit affecter 
+un sujet par le directeur de l'agence. Le sujet est ensuite développé en 
+\glslink{pairprogramming}{\textit{pair programming}}.
 
-L'objectif du VSprint est de permettre le partage des connaissances et de bonnes pratiques de développement, de faire connaître les projets des autres développeurs et d'améliorer de façon continue les outils de l'entreprise. 
+L'objectif du VSprint est de permettre le partage des connaissances et de
+bonnes pratiques de développement, de faire connaître les projets des autres
+développeurs et d'améliorer de façon continue les outils de l'entreprise. 
 
-Une demie heure est aussi consacrée aux présentations (généralement deux). Des sujets sont sélectionnés et deux personnes se porte volontaires pour les présenter aux autres. Cette pratique est pertinente car c'est un moyen d'autoformation.
+Une demie heure est aussi consacrée aux présentations (généralement deux). Des
+sujets sont sélectionnés et deux personnes se porte volontaires pour les
+présenter aux autres. Cette pratique est pertinente car c'est un moyen
+d'autoformation.
 
-\section{Outils}
+\section{Outils} 
 Plusieurs outils ont été utilisés pour la réalisation du projet de stage. 
 
-\subsection{Python et JavaScript : langages de programmation}
-Logilab est spécialisée dans le développement avec le langage de programmation Python. La grande partie des développement réalisée pendant le stage est alors écrite en Python. Python est un langage orienté objet, multi-paradigme qui est doté d'un typage dynamique. L'un des avantages de Python est la possibilité de modifier un programme sans avoir à changer directement le code de celui-ci (\textit{monkey patching}).
+\subsection{Python et JavaScript : langages de programmation} 
+Logilab est spécialisée dans le développement avec le langage de programmation 
+Python. La grande partie des développement réalisée pendant le stage est alors 
+écrite en Python. Python est un langage orienté objet, multi-paradigme qui est 
+doté d'un typage dynamique. L'un des avantages de Python est la possibilité de 
+modifier un programme sans avoir à changer directement le code de celui-ci
+(\textit{monkey patching}).
 
-JavaScript est aussi utilisé pour l'écriture de code exécutant sur le navigateur de client. 
+JavaScript est aussi utilisé pour l'écriture de code exécutant sur le
+navigateur de client. 
 
-\subsection{Mercurial}
-Mercurial est un logiciel de gestion de version décentralisé. Mercurial crée une branche pour chaque développeur d'un entrepôt. Il permet aussi d'associer un état (brouillon, publique, secret) à chaque nouvelle révision. Une nouvelle version commence dans l'état brouillon et passe à l'état publique lorsque elle est prête à être intégrer. 
+\subsection{Mercurial} 
+Mercurial est un logiciel de gestion de version décentralisé. Mercurial crée une 
+branche pour chaque développeur d'un entrepôt. Il permet aussi d'associer un état 
+(brouillon, publique, secret) à chaque nouvelle révision. Une nouvelle version 
+commence dans l'état brouillon et passe à l'état publique lorsque elle est prête 
+à être intégrer. 
 
-Plusieurs extensions sont disponibles et qui rajoutent des fonctionnalités avancées au logiciel. Les extensions les plus utilisée durant le stage sont \textit{histedit} et \textit{evolve}. Ces deux extensions permettent de modifier les révisions dans le but d'avoir un historique propre. Elle permettent de changer les message d'une révision, fusionner des révisions et modifier une révision. Ces deux extensions garantissent qu'aucune donnée n'est perdu en modifiant l'historique. 
+Plusieurs extensions sont disponibles et qui rajoutent des fonctionnalités
+avancées au logiciel. Les extensions les plus utilisée durant le stage sont
+\textit{histedit} et \textit{evolve}. Ces deux extensions permettent de
+modifier les révisions dans le but d'avoir un historique propre. Elle
+permettent de changer les message d'une révision, fusionner des révisions et
+modifier une révision. Ces deux extensions garantissent qu'aucune donnée n'est
+perdu en modifiant l'historique. 
 
-\subsection{Extranet}
-Plusieurs outils sont disponibles sur l'extranet de l'entreprise. L'outil le plus utilisé est l'application de revue de code. \`A l'arrivé d'une nouvelle révision à l'entrepôt, l'application choisit une personne pour faire la revue. L'application permet aussi le visionnage des modifications apportées par cette révision. La révision est ensuite validée ou des tâches lui seront associées à réaliser avant sa validation. L'application permet aussi de voir à quelle tâche (\textit{ticket}) est attachée la nouvelle révision.   
+\subsection{Extranet} 
+Plusieurs outils sont disponibles sur l'extranet de l'entreprise. L'outil le 
+plus utilisé est l'application de revue de code. \`A l'arrivé d'une nouvelle 
+révision à l'entrepôt, l'application choisit une personne pour faire la revue. 
+L'application permet aussi le visionnage des modifications apportées par cette 
+révision. La révision est ensuite validée ou des tâches lui seront associées 
+à réaliser avant sa validation. L'application
+permet aussi de voir à quelle tâche (\textit{ticket}) est attachée la nouvelle
+révision.   
 
-\section{Planning}
-Pour ce stage une méthode agile a été utilisé. Les méthodes agiles, contrairement à la méthode de gestion de projet, ne nécessite pas la réalisation d'un planning détaillé. La planification avec l'approche agile est adaptative et des ajustements peuvent être réalisés au cours de projet. Avec cette approche, le développement est réalisé de manière itératif et un macro-planning est réalisé et qui corresponde aux tâches nécessaires pour les développements à réaliser durant une itération. 
+\section{Planning} 
+Pour ce stage une méthode agile a été utilisé. Les méthodes agiles, contrairement 
+à la méthode de gestion de projet, ne nécessite pas la réalisation d'un planning 
+détaillé. La planification avec l'approche agile est adaptative et des ajustements 
+peuvent être réalisés au cours de projet. Avec cette approche, le développement 
+est réalisé de manière itératif et un macro-planning est réalisé et qui 
+corresponde aux tâches nécessaires pour les développements à réaliser durant 
+une itération. 
 
-La figure ~\ref{fig:gantt} est le diagramme de Gantt qui correspond au planning réel de stage. On remarque que plusieurs tâches se déroulent simultanément et s'étale sur des périodes longues. Ceci est dû au processus de revue utilisé à Logilab. Lorsque une tâche est réalisée, celle-ci passe à la revue. Pendant que la tâche est en attente de revue, on commence à travailler sur une nouvelle tâche.
+La figure ~\ref{fig:gantt} est le diagramme de Gantt qui correspond au planning
+réel de stage. On remarque que plusieurs tâches se déroulent simultanément et
+s'étale sur des périodes longues. Ceci est dû au processus de revue utilisé à
+Logilab. Lorsque une tâche est réalisée, celle-ci passe à la revue. Pendant que
+la tâche est en attente de revue, on commence à travailler sur une nouvelle
+tâche.
 
 \input{gantt}
